@@ -8,11 +8,7 @@ import org.example.service.ClientService;
 import org.example.service.PlanetService;
 import org.example.service.TicketService;
 import org.flywaydb.core.Flyway;
-
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -65,23 +61,27 @@ public class Main {
         System.out.println("-------------------------------");
         TicketService ticketService = new TicketService();
 
+        Planet newPlanetTo = new Planet();
+        newPlanetTo.setName("Mars");
+        newPlanetTo.setId("MARS");
 
-
-        Planet newPlanetFrom = planetService.findById("VEN");
-        System.out.println(newPlanetFrom);
-        Planet newPlanetTo = planetService.findById("JUP");
         System.out.println(newPlanetTo);
 
-        Client newClient = new Client();
-        newClient.setName("Karkason");
-        clientService.save(newClient);
+        Planet newPlanetFrom = new Planet();
+        newPlanetFrom.setName("Earth");
+        newPlanetFrom.setId("EARTH");
+
+        System.out.println(newPlanetFrom);
 
         Ticket newTicket = new Ticket();
-        newTicket.setClient(newClient);
+        newTicket.setClient(clientService.findById(1L));
         newTicket.setCreatedAt(LocalDate.now());
         newTicket.setFromPlanet(newPlanetFrom);
         newTicket.setToPlanet(newPlanetTo);
 
+        System.out.println(newTicket.getFromPlanet());
+        System.out.println(newTicket.getToPlanet());
+        System.out.println(newTicket.getClient());
 
         ticketService.save(newTicket);
         System.out.println("Created Ticket = " + newTicket);
